@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Recipe</title>
     <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="/css/global.css" />
 </head>
 <body>
     <%- include('../header') %>
-    <h1>Edit Recipe</h1>
+    <h1 class="form-heading">Edit Recipe</h1>
     <form action="/recipes/<%= recipe._id %>/edit?_method=PUT" method="POST">
         <label for="title">Recipe Title:</label>
         <input type="text" id="title" name="Title" value="<%= recipe.Title %>" required>
