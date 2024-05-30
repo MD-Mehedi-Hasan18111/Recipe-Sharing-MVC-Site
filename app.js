@@ -61,8 +61,10 @@ app.set("views", path.join(__dirname, "views"));
 // Routes
 const indexRoute = require("./routes/index");
 const recipeRoutes = require("./routes/recipes");
+const userRoutes = require("./routes/users");
 app.use("/", indexRoute);
 app.use("/recipes", recipeRoutes);
+app.use("/auth", userRoutes);
 
 // Additional static routes
 app.get("/signup", (req, res) => {
