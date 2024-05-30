@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= recipe.Title %></title>
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+    <%- include('../header') %>
+    <h1><%= recipe.Title %></h1>
+    <h2>Ingredients:</h2>
+    <ul>
+        <% recipe.Ingredients.forEach(ingredient => { %>
+            <li><%= ingredient %></li>
+        <% }) %>
+    </ul>
+    <h2>Instructions:</h2>
+    <p><%= recipe.Instructions %></p>
+    <h2>Cleaned Ingredients:</h2>
+    <ul>
+        <% recipe.Cleaned_Ingredients.forEach(ingredient => { %>
+            <li><%= ingredient %></li>
+        <% }) %>
+    </ul>
+    <img src="/images/<%= recipe.image_name %>.jpg" alt="<%= recipe.title %>">
+    <a href="/recipes/<%= recipe._id %>/edit">Edit</a>
+    <form action="/recipes/list/<%= recipe._id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>

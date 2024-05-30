@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe List</title>
+    <link rel="stylesheet" href="/css/header.css" />
+    <style>
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a, .pagination span {
+            margin: 0 5px;
+            text-decoration: none;
+            color: black;
+        }
+        .pagination a {
+            text-decoration: none;
+        }
+        .pagination a.active {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../header') %>
+    <h1>Recipe List</h1>
+    <a href="/recipes/add">Add New Recipe</a>
+    <ul>
+        <% recipes.forEach(recipe => { %>
+            <li>
+                <a href="/recipes/list/<%= recipe._id %>"><%= recipe.Title %></a>
+                <a href="/recipes/<%= recipe._id %>/edit">Edit</a>
+                <form action="/recipes/list/<%= recipe._id %>?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+    <!-- Pagination Buttons -->
+    <div class="pagination">
+        <% if (currentPage > 1) { %>
+            <a href="/recipes/list?page=<%= currentPage - 1 %>&limit=<%= 10 %>">&laquo; Previous</a>
+        <% } %>
+        <span>Page <%= currentPage %> of <%= totalPages %></span>
+        <% if (currentPage < totalPages) { %>
+            <a href="/recipes/list?page=<%= currentPage + 1 %>&limit=<%= 10 %>">Next &raquo;</a>
+        <% } %>
+    </div>
+</body>
+</html>
