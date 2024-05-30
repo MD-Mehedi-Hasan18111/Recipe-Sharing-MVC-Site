@@ -65,6 +65,12 @@ app.use("/", indexRoute);
 app.use("/recipes", recipeRoutes);
 
 // Additional static routes
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 app.get("/contact", (req, res) => {
   res.render("contact");
 });
