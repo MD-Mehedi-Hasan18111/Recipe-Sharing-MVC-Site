@@ -60,6 +60,12 @@ router.post("/login", async (req, res) => {
       expiresIn: "7d",
     });
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 24000 * 60 * 60,
+    });
+
     res
       .status(200)
       .json({ user: { fname: user?.fname, lname: user?.lname }, token });
@@ -67,6 +73,15 @@ router.post("/login", async (req, res) => {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Server error. Please try again later." });
   }
+});
+
+router.post("/logout", async (req, res) => {
+  res.clearCookie("token", {
+    path: "/",
+    domain: "localhost",
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: "OK" });
 });
 
 module.exports = router;

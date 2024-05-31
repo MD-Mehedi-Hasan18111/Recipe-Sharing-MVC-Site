@@ -54,10 +54,8 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            if (data.token) {
-              // Store token in session storage
+            if (data.user) {
               sessionStorage.setItem("user", JSON.stringify(data.user));
-              sessionStorage.setItem("token", data.token);
               window.location.href = "/";
             } else {
               // Handle login error

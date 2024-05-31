@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipe");
+const verifyAuthorization = require("../middleware/authorization");
 
 // =========================================================
 // READ recipes list from DB
 // =========================================================
-router.get("/list", async (req, res) => {
+router.get("/list", verifyAuthorization, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -37,7 +38,7 @@ router.get("/add", (req, res) => {
 // =========================================================
 // CREATE New Recipe
 // =========================================================
-router.post("/add", async (req, res) => {
+router.post("/add", verifyAuthorization, async (req, res) => {
   const { Title, Ingredients, Instructions, Image_Name, Cleaned_Ingredients } =
     req.body;
   const recipe = new Recipe({
@@ -56,7 +57,7 @@ router.post("/add", async (req, res) => {
 // =========================================================
 // READ single recipe details by recipe ID
 // =========================================================
-router.get("/list/:id", async (req, res) => {
+router.get("/list/:id", verifyAuthorization, async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     res.render("recipes/details", { recipe });
@@ -69,7 +70,7 @@ router.get("/list/:id", async (req, res) => {
 // =========================================================
 // Render Form to Edit a recipe details by recipe ID
 // =========================================================
-router.get("/:id/edit", async (req, res) => {
+router.get("/:id/edit", verifyAuthorization, async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) {
@@ -85,7 +86,7 @@ router.get("/:id/edit", async (req, res) => {
 // =========================================================
 // UPDATE a recipe details by recipe ID
 // =========================================================
-router.put("/:id/edit", async (req, res) => {
+router.put("/:id/edit", verifyAuthorization, async (req, res) => {
   const { Title, Ingredients, Instructions, Image_Name, Cleaned_Ingredients } =
     req.body;
   try {
@@ -108,7 +109,7 @@ router.put("/:id/edit", async (req, res) => {
 // =========================================================
 // DELETE recipe by recipe ID
 // =======================================================
-router.delete("/list/:id", async (req, res) => {
+router.delete("/list/:id", verifyAuthorization, async (req, res) => {
   try {
     await Recipe.findByIdAndDelete(req.params.id);
     res.redirect("/recipes/list");

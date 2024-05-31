@@ -32,5 +32,12 @@
       />
       <button type="submit">Add Recipe</button>
     </form>
+
+    <script>
+      const auth_user = sessionStorage.getItem("user");
+      if (!auth_user) {
+        window.location.href = "/login";
+      }
+    </script>
   </body>
 </html>
